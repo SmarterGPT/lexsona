@@ -116,7 +116,7 @@ describe("lexsona doctor", () => {
     };
     expect(result.code, result.stdout).toBe(0);
     expect(report.status.healthy).toBe(true);
-    expect(report.checks.lex).toEqual({ version: "4.0.3", ok: true });
+    expect(report.checks.lex).toEqual({ version: "4.4.4", ok: true });
   });
 
   it("reports an absent compatibility database as optional without claiming scoped health", async () => {

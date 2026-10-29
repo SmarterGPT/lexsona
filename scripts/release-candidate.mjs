@@ -115,7 +115,7 @@ export function loadAndVerifyReleaseCandidate(repoRoot, receiptPath) {
     !/^[0-9a-f]{40}$/.test(receipt.source?.commit ?? "") ||
     typeof receipt.environment?.node !== "string" ||
     typeof receipt.environment?.npm !== "string" ||
-    receipt.dependency?.lex?.version !== "4.0.3" ||
+    receipt.dependency?.lex?.version !== "4.4.4" ||
     !receipt.dependency?.lex?.resolved?.startsWith("https://registry.npmjs.org/") ||
     !receipt.dependency?.lex?.integrity ||
     !Array.isArray(receipt.gates)

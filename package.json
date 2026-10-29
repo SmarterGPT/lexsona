@@ -32,19 +32,20 @@
     "lint": "eslint src --ext .ts --max-warnings 0",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "pretest": "npm run clean && npm run build",
+    "pretest": "npm run check:dependencies && npm run clean && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "ci:minimal": "npm run lint && npm run typecheck",
-    "ci": "npm run lint && npm run typecheck && npm test",
-    "ci:full": "npm run lint && npm run typecheck && npm test",
+    "ci:minimal": "npm run check:dependencies && npm run lint && npm run typecheck",
+    "ci": "npm run check:dependencies && npm run lint && npm run typecheck && npm test",
+    "ci:full": "npm run check:dependencies && npm run lint && npm run typecheck && npm test",
     "local-ci": "npm run ci",
     "release": "node scripts/manual-publish-boundary.mjs",
     "release:dry-run": "npm run release:candidate",
     "release:candidate": "node scripts/prepare-release-candidate.mjs && node scripts/verify-release-candidate.mjs",
     "release:verify": "node scripts/verify-release-candidate.mjs --check-only",
     "release:verify-published": "node scripts/verify-published-candidate.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:dependencies": "node scripts/current-lex-dependencies.mjs"
   },
   "keywords": [
     "ai",
@@ -79,7 +80,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@smartergpt/lex": "4.0.3",
+    "@smartergpt/lex": "4.4.4",
     "@types/micromatch": "^4.0.10",
     "@types/node": "^25.0.2",
     "@types/pg": "^8.23.1",
@@ -95,7 +96,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.24.3",
-    "better-sqlite3-multiple-ciphers": "^12.6.2",
+    "better-sqlite3-multiple-ciphers": "13.0.3",
     "commander": "^14.0.2",
     "micromatch": "^4.0.8",
     "yaml": "^2.3.0",

@@ -37,8 +37,8 @@ function fixture() {
     environment: { node: "v24.14.1", npm: "11.11.0", platform: "test", architecture: "test" },
     dependency: {
       lex: {
-        version: "4.0.3",
-        resolved: "https://registry.npmjs.org/@smartergpt/lex/-/lex-4.0.3.tgz",
+        version: "4.4.4",
+        resolved: "https://registry.npmjs.org/@smartergpt/lex/-/lex-4.4.4.tgz",
         integrity: "sha512-reviewed",
       },
     },

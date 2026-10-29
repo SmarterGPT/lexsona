@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 
 import { candidateReceiptFilename, loadAndVerifyReleaseCandidate } from "./release-candidate.mjs";
 import { runNpm } from "./run-npm.mjs";
+import { qualifyInstalledCurrentLexInChild } from "./current-lex-dependencies.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const receiptArgument = process.argv.indexOf("--candidate");
@@ -19,11 +20,11 @@ const candidate = loadAndVerifyReleaseCandidate(repoRoot, receiptPath);
 const sourceLock = JSON.parse(fs.readFileSync(path.join(repoRoot, "package-lock.json"), "utf8"));
 const expectedLex = sourceLock.packages?.["node_modules/@smartergpt/lex"];
 if (
-  expectedLex?.version !== "4.0.3" ||
+  expectedLex?.version !== "4.4.4" ||
   !expectedLex.resolved?.startsWith("https://registry.npmjs.org/") ||
   !expectedLex.integrity
 ) {
-  throw new Error("Source lock does not bind exact public @smartergpt/lex@4.0.3 bytes");
+  throw new Error("Source lock does not bind exact public @smartergpt/lex@4.4.4 bytes");
 }
 if (
   candidate.receipt.dependency.lex.version !== expectedLex.version ||
@@ -60,7 +61,7 @@ try {
     [
       "install",
       candidate.tarballPath,
-      "@smartergpt/lex@4.0.3",
+      "@smartergpt/lex@4.4.4",
       "--registry=https://registry.npmjs.org/",
       "--no-audit",
       "--no-fund",
@@ -76,17 +77,26 @@ try {
   const installedLex = lock.packages?.["node_modules/@smartergpt/lex"];
   const installedLexSona = lock.packages?.["node_modules/@smartergpt/lexsona"];
   if (
-    installedLex?.version !== "4.0.3" ||
+    installedLex?.version !== "4.4.4" ||
     installedLex.resolved !== expectedLex.resolved ||
     installedLex.integrity !== expectedLex.integrity
   ) {
-    throw new Error("Consumer did not resolve the exact reviewed public Lex 4.0.3 bytes");
+    throw new Error("Consumer did not resolve the exact reviewed public Lex 4.4.4 bytes");
   }
   if (
     !installedLexSona?.resolved?.includes(candidate.receipt.artifact.filename) ||
     installedLexSona.resolved.includes("workspace:")
   ) {
     throw new Error("Consumer did not resolve LexSona from the retained tarball");
+  }
+  // Windows keeps a loaded .node DLL mapped until process exit. Let the child own it so
+  // this cleanup-owning process can remove the disposable consumer after qualification.
+  qualifyInstalledCurrentLexInChild(lexRoot, lexsonaRoot);
+  const sqlitePackages = Object.entries(lock.packages ?? {}).filter(([name]) =>
+    name.endsWith("node_modules/better-sqlite3-multiple-ciphers")
+  );
+  if (sqlitePackages.length !== 1 || sqlitePackages[0][1].version !== "13.0.3") {
+    throw new Error("Packed current-train consumer did not deduplicate SQLite 13.0.3");
   }
 
   const smokePath = path.join(consumer, "smoke.mjs");

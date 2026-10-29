@@ -15,8 +15,8 @@ if (
   packageJson.publishConfig?.access !== "public" ||
   packageJson.publishConfig?.registry !== "https://registry.npmjs.org/" ||
   packageJson.peerDependencies?.["@smartergpt/lex"] !== ">=4.0.1 <5" ||
-  packageJson.devDependencies?.["@smartergpt/lex"] !== "4.0.3" ||
-  lockedLex?.version !== "4.0.3" ||
+  packageJson.devDependencies?.["@smartergpt/lex"] !== "4.4.4" ||
+  lockedLex?.version !== "4.4.4" ||
   !lockedLex.resolved?.startsWith("https://registry.npmjs.org/") ||
   !lockedLex.integrity
 ) {

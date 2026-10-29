@@ -13,7 +13,18 @@ publish or create a GitHub release.
 
 The receipt binds the package name/version, source commit, tarball SHA-256/SHA-1/SRI/size, each gate's
 command, working directory, duration, exit status, and bounded output. The packed-consumer gate installs
-the retained tarball with the exact public `@smartergpt/lex@4.0.3` bytes into a disposable consumer.
+the retained tarball with the exact public `@smartergpt/lex@4.4.4` bytes into a disposable consumer.
+
+Current-train qualification also requires exactly one resolved
+`better-sqlite3-multiple-ciphers@13.0.3` package and exercises its native in-memory SQL runtime from
+both Lex and LexSona. `npm run check:dependencies` checks the source installation; the retained
+tarball consumer repeats the check after an ordinary isolated npm install. SQLite 13 ships Node-API
+prebuilds, so the current Lex and SQLite dependencies require no install-script approvals. Install
+the development graph with `npm ci --ignore-scripts`; the optional macOS watcher is unnecessary for
+the build and test gates.
+
+The `>=4.0.1 <5` Lex peer range remains an API compatibility statement. Single-binding qualification
+applies to the current Lex 4.4.4 train; historical Lex releases may retain their older native binding.
 
 ## Human publication
 
