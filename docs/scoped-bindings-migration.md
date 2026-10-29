@@ -4,7 +4,14 @@ LexSona's canonical library contract consumes Lex's typed behavioral-store servi
 or receive a database driver and it does not discover authority from ambient process state.
 The LexSona 2.x scoped-binding line requires public `@smartergpt/lex@4.0.1` or later within Lex 4.
 The current release qualification and immutable candidate evidence use exact public
-`@smartergpt/lex@4.0.3`; this does not narrow the supported Lex 4 peer range.
+`@smartergpt/lex@4.4.4`; this does not narrow the supported Lex 4 peer range.
+
+Current-train development and packed-consumer gates resolve exactly one native
+`better-sqlite3-multiple-ciphers@13.0.3` package shared with Lex 4.4.4. The broad API peer range still
+permits historical Lex releases with older bindings; it does not promise deduplication for those
+releases. The [SQLite 13 release](https://github.com/m4heshd/better-sqlite3-multiple-ciphers/releases/tag/v13.0.3)
+requires Node 22 or later (LexSona already requires Node 24) and Linux prebuilds require glibc 2.35 or
+later. Windows x64/arm64 and Linux arm64 prebuilds are included in that release.
 
 ## Canonical host integration
 

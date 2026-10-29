@@ -67,7 +67,7 @@ const definitions = [
     name: "packed-consumer-smoke",
     command: process.execPath,
     args: [path.join(repoRoot, "scripts", "consumer-smoke-test.mjs"), "--candidate", receiptPath],
-    evidence: "Exact tarball and public Lex 4.0.3 installed and exercised in a disposable consumer",
+    evidence: "Exact tarball and public Lex 4.4.4 installed and exercised in a disposable consumer",
   },
   {
     name: "npm-publish-dry-run",

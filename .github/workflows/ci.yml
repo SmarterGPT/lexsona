@@ -51,6 +51,7 @@ jobs:
           node-version: "24"
           cache: "npm"
       - run: npm ci
+      - run: npm run check:dependencies
       - run: npm run typecheck
 
   # Standard gates: mandatory for pull requests/pushes and manual standard/full runs.
